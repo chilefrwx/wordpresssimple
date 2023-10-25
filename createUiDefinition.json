@@ -1,0 +1,85 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "websiteName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Default Website URL that ends in .azurewebsites.net",
+                "toolTip": "Default Website URL",
+                "constraints": {
+                    "required": true,
+                    "validations": [
+                        {
+                            "regex": "^[a-z0-9A-Z]{5,25}$",
+                            "message": "Between 5-25 alphanumeric characters are allowed."
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "sku",
+                "type": "Microsoft.Common.DropDown",
+                "label": "App Service Plan",
+                "defaultValue": "S1",
+                "toolTip": "App Service Plan",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "S1",
+                            "value": "S1"
+                        },
+                        {
+                            "label": "S2",
+                            "value": "S2"
+                        }
+                    ],
+                    "required": true
+                }
+            },
+            {
+                "name": "repoUrl",
+                "type": "Microsoft.Common.DropDown",
+                "label": "WordPress GitHub Repo",
+                "defaultValue": "https://github.com/azureappserviceoss/wordpress-azure",
+                "toolTip": "WordPress GitHub Repo URL",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "https://github.com/azureappserviceoss/wordpress-azure",
+                            "value": "https://github.com/azureappserviceoss/wordpress-azure"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "branch",
+                "type": "Microsoft.Common.DropDown",
+                "label": "branch",
+                "defaultValue": "master",
+                "toolTip": "GitHub repo branch to deploy to App Service",
+                "constraints": {
+                    "allowedValues": [
+                        {
+                            "label": "master",
+                            "value": "master"
+                        }
+                    ]
+                },
+                "visible": true
+            }
+        ],
+        "steps": [],
+        "outputs": {
+            "location": "[location()]",
+            "webAppName": "[basics('websiteName')]",
+            "sku": "[basics('sku')]",
+            "repoUrl": "[basics('repoUrl')]",
+            "branch": "[basics('branch')]"
+        }
+    }
+}
